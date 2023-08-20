@@ -7,5 +7,7 @@ int _putchar(char c);
 /* printf function */
 int _printf(const char *format, ...);
 
+/*  */
+void _puts(char *str);
 
 #endif
