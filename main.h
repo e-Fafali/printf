@@ -16,7 +16,8 @@ int _printf(const char *format, ...);
 /* function pointer for the format specifier */
 typedef int (*format_function)(va_list args);
 
-typedef struct {
+typedef struct
+{
 	char spec;
 	format_function function;
 } format_spec;
@@ -24,9 +25,12 @@ typedef struct {
 /* the collector */
 format_spec get_format_func(char spec);
 
-int print_int();
-int print_str();
-int print_octal();
-int print_percent();
-int print_char();
+
+int print_int(va_list args);
+int print_str(va_list args);
+int print_octal(va_list args);
+int print_percent(va_list args);
+int print_char(va_list args);
+
+
 #endif

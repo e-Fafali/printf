@@ -5,7 +5,7 @@
  * power - a function to calculate power
  *
  * @base: param
- * @exponent: param
+ * @exp: param
  *
  * Return: result.
  */
@@ -19,29 +19,35 @@ int power(int base, int exp)
 		result *= base;
 		exp--;
 	}
-	return result;
+	return (result);
 }
 
 /**
  * print_int - a function to print an integer
  *
- * @va_list: param
  * @args: param
  *
- *
+ * Return: the xters ptinted
  */
 int print_int(va_list args)
 {
-	int digits = 0; 
+	va_list args_cpy;
+	
+	int digits = 0;
 	char digit;
-	int num = va_arg(args, int);
+	int num = va_arg(args_cpy, int);
 	int xters_printed = 0;
 	int temp = num;
+
+	/* va_list args_cpy; */
+	va_copy(args_cpy, args);
+
 
 	if (num == 0)
 	{
 		_putchar('0');
-		return 1;
+		va_end(args_cpy);
+		return (1);
 	}
 
 	while (temp > 0)
@@ -59,25 +65,7 @@ int print_int(va_list args)
 		digit--;
 		xters_printed++;
 	}
+
+	va_end(args_cpy);
 	return (xters_printed);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -23,14 +23,13 @@ format_spec get_format_func(char spec)
 	int i = 0;
 	format_spec default_spec = {0, NULL};
 
-	for (i = 0; format_specifier[i].spec != 0; i++)
+	while (format_specifier[i].spec != 0)
 	{
 		if (format_specifier[i].spec == spec)
 		{
 			return (format_specifier[i]);
 		}
-	}	
-
-	/* format_spec default_spec = {0, NULL}; */
+		i++;
+	}
 	return (default_spec);
 }

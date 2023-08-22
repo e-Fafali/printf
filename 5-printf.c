@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include "main.h"
 
-/**
- * _printf - custom printf 
- * 
- * @format: param
- */
 
 /* lets declare some external functions */
 extern int print_int(va_list args);
@@ -14,38 +9,54 @@ extern int print_octal(va_list args);
 extern int print_percent(va_list args);
 extern int print_char(va_list args);
 
-/* the printf function */
+/**
+ * _printf - custom printf
+ *
+ * @format: param
+ *
+ * Return: xters pited
+ */
+
 int _printf(const char *format, ...)
-{	
-	int xters_printed = 0;                                                                            
+{
+	int xters_printed = 0;
 	const char *ch;
-	
+	format_spec format_specifier;
+
 	va_list args;
+
 	va_start(args, format);
 
 	for (ch = format; *ch != '\0'; ch++)
 	{
-		/* format_spec format_specifier = get_format_func(*ch);*/
-		if (*ch == '%')
+		if (*ch == '%' && (*(ch + 1)) == '\0')
+			return (-1);
+
+		if (*ch == '%' && (*(ch + 1)) != '\0')
 		{
-			format_spec format_specifier = get_format_func(*ch);
+			format_specifier = get_format_func(*ch);
 			ch++;
 
 			if (format_specifier.function)
 			{
-				xters_printed += format_specifier.function(args);
+				va_list args_cpy;
+				va_copy(args_cpy, args);
+				xters_printed += format_specifier.function(args_cpy);
+				va_end(args_cpy);
 			}
 			else
 			{
-				xters_printed += _putchar((unsigned char) *ch);
+				_putchar(*ch);
+				xters_printed++;
 			}
 		}
 		else
 		{
-			xters_printed += _putchar((unsigned char) *ch);
+				_putchar(*ch);
+				xters_printed++;
 		}
 	}
 
 	va_end(args);
-	return xters_printed;
+	return (xters_printed);
 }
