@@ -1,62 +1,46 @@
 #include <stdio.h>
 #include "main.h"
 
+/* Define an array of function pointers indexed by ASCII values */
 
-/* lets declare some external functions */
-extern int print_int(va_list args);
-extern int print_str(va_list args);
-extern int print_octal(va_list args);
-extern int print_percent(va_list args);
-extern int print_char(va_list args);
+#define NUM_FORMAT_FUNCTIONS 256
 
-/**
- * _printf - custom printf
- *
- * @format: param
- *
- * Return: xters pited
- */
+FormatFunction format_functions[NUM_FORMAT_FUNCTIONS]; 
 
-int _printf(const char *format, ...)
+int _printf(const char *format, ...) 
 {
-	int xters_printed = 0;
-	const char *ch;
-	format_spec format_specifier;
+    va_list args;
 
-	va_list args;
+    int characters_printed = 0;
+    const char *c;
 
-	va_start(args, format);
+	FormatFunction function;
 
-	for (ch = format; *ch != '\0'; ch++)
+	va_start(args, format); 
+
+    for (c = format; *c != '\0'; c++) 
 	{
-		if (*ch == '%' && (*(ch + 1)) == '\0')
-			return (-1);
-
-		if (*ch == '%' && (*(ch + 1)) != '\0')
+        if (*c == '%' && (*(c + 1)) != '\0') 
 		{
-			format_specifier = get_format_func(*ch);
-			ch++;
+            c++;
+            function = format_functions[(unsigned char)*c];
 
-			if (format_specifier.function)
-			{
-				va_list args_cpy;
-				va_copy(args_cpy, args);
-				xters_printed += format_specifier.function(args_cpy);
-				va_end(args_cpy);
-			}
-			else
-			{
-				_putchar(*ch);
-				xters_printed++;
-			}
-		}
-		else
-		{
-				_putchar(*ch);
-				xters_printed++;
-		}
-	}
+            if (function) {
+                va_list args_cpy;
+                va_copy(args_cpy, args);
+                characters_printed += function(args_cpy);
+                va_end(args_cpy);
+            } else {
+                _putchar(*c);
+                characters_printed++;
+            }
+        } else {
+            _putchar(*c);
+            characters_printed++;
+        }
+    }
 
-	va_end(args);
-	return (xters_printed);
+    va_end(args);
+    return characters_printed;
 }
+
