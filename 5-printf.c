@@ -1,46 +1,57 @@
 #include <stdio.h>
 #include "main.h"
+/**
+ * _printf - as it says
+ * @format: param
+ * Return: count
+ */
 
-/* Define an array of function pointers indexed by ASCII values */
-
-#define NUM_FORMAT_FUNCTIONS 256
-
-FormatFunction format_functions[NUM_FORMAT_FUNCTIONS]; 
-
-int _printf(const char *format, ...) 
+int _printf(const char *format, ...)
 {
-    va_list args;
+	va_list args;
+	const char *c;
+	int count = 0;
 
-    int characters_printed = 0;
-    const char *c;
+	va_start(args, format);
 
-	FormatFunction function;
-
-	va_start(args, format); 
-
-    for (c = format; *c != '\0'; c++) 
+	for (c = format; *c != '\0'; c++)
 	{
-        if (*c == '%' && (*(c + 1)) != '\0') 
+		if (*c == '%')
 		{
-            c++;
-            function = format_functions[(unsigned char)*c];
+			c++;
+			if (*c == 'd')
+			{
+				count += print_int(args, &count);
+			}
+			else if (*c == 's')
+			{
+				count += print_string(args, &count);
+			}
+			else if (*c == 'c')
+			{
+				count += print_char(args, &count);
+			}
+			else if (*c == '%')
+			{
+				count += print_percent(args, &count);
+			}
+			else if (*c == 'i')
+			{
+				count += print_integer(args, &count);
+			}
+			else
+			{
+				_putchar(*c);
+				count++;
+			}
+		}
+		else
+		{
+			_putchar(*c);
+			count++;
+		}
+	}
+	va_end(args);
 
-            if (function) {
-                va_list args_cpy;
-                va_copy(args_cpy, args);
-                characters_printed += function(args_cpy);
-                va_end(args_cpy);
-            } else {
-                _putchar(*c);
-                characters_printed++;
-            }
-        } else {
-            _putchar(*c);
-            characters_printed++;
-        }
-    }
-
-    va_end(args);
-    return characters_printed;
+	return (count);
 }
-

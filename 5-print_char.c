@@ -1,23 +1,20 @@
-#include <stdio.h>
 #include "main.h"
 
 /**
  * print_char - as it says
  *
  * @args: param
+ * @count: param
  *
  * Return: 1 for success
  */
-int print_char(va_list args)
+
+int print_char(va_list args, int *count)
 {
-	va_list args_cpy;
-
-	char ch = va_arg(args_cpy, int);
-
-    va_copy(args_cpy, args);
+	char ch = va_arg(args, int);
 
 	_putchar(ch);
+	(*count)++;
 
-	va_end(args_cpy);
 	return (1);
 }

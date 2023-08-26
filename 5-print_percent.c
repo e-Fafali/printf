@@ -1,20 +1,18 @@
-#include <stdio.h>
 #include "main.h"
 
 /**
  * print_percent - as it says
  *
- * @args: param
+ * @args: paraim
+ * @count: param
  *
  * Return: 1 for success
+ *
  */
-int print_percent(__attribute__((unused)) va_list args)
+int print_percent(__attribute__((unused)) va_list args, int *count)
 {
-	va_list args_cpy;
-	va_copy(args_cpy, args);
-
 	_putchar('%');
+	(*count)++;
 
-	va_end(args_cpy);
 	return (1);
 }
