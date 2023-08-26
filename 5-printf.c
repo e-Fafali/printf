@@ -39,6 +39,22 @@ int _printf(const char *format, ...)
 			{
 				count += print_integer(args, &count);
 			}
+			else if (*c == 'u')
+			{
+				count += print_unsigned(args, &count);
+			}
+			else if (*c == 'o')
+			{
+				count += print_octal(args, &count);
+			}
+			else if (*c == 'x')
+			{
+				count += print_hexadecimal_lower(args, &count);
+			}
+			else if (*c == 'X')
+			{
+				count += print_hexadecimal_lower(args, &count);
+			}
 			else
 			{
 				_putchar(*c);

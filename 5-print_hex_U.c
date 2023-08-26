@@ -1,14 +1,18 @@
 #include "main.h"
-
 /**
- * print_octal - as it says
+ * print_hexadecimal_upper - as it says
  *
  * @args: paraim
  * @count: param
  *
  * Return: len
+ *
+ * Description: Define the function that
+ * handles %x for uppercase hexadecimal
+ * integers
+ *
  */
-int print_octal(va_list args, int *count)
+int print_hexadecimal_upper(va_list args, int *count)
 {
 	/* Extract the next argument as an unsigned integer */
 	unsigned int num = va_arg(args, unsigned int);
@@ -17,10 +21,10 @@ int print_octal(va_list args, int *count)
 	char buffer[20];
 
 	/**
-	* Convert the integer to a string in octal
-	* format and store it in the buffer
-	*/
-	int len = sprintf(buffer, "%o", num);
+	 * Convert the integer to a string in uppercase
+	 * hexadecimal format and store it in the buffer
+	 */
+	int len = sprintf(buffer, "%X", num);
 
 	int i; /* Declare a loop variable */
 
@@ -33,7 +37,6 @@ int print_octal(va_list args, int *count)
 		putchar(buffer[i]);
 		(*count)++;
 	}
-
 	/* Return the number of characters printed */
 	return (len);
 }
